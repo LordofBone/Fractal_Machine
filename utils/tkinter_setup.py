@@ -1,3 +1,4 @@
+import _tkinter
 import turtle
 import tkinter as tk
 
@@ -9,12 +10,15 @@ from here in order to set random positions within the canvas.
 
 
 class TkinterBase:
-    def __init__(self, title="Lateralus", width=800, height=600):
+    def __init__(self, title="Fractal Machine", width=800, height=600):
         self.width = width
         self.height = height
         self.master = tk.Tk()
-        # todo: linux (raspbian) does not like this 'zoomed' setting, need to find a workaround
-        self.master.state('zoomed')
+        # linux (Raspberry Pi OS) does not like this 'zoomed' setting, on exception will set to 'normal' to workaround
+        try:
+            self.master.state('zoomed')
+        except _tkinter.TclError:
+            self.master.state('normal')
         self.canvas = tk.Canvas(self.master)
         self.master.title(title)
         self.canvas.config(width=self.width, height=self.height)
