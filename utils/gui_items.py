@@ -332,10 +332,10 @@ class Items:
         for theme_name in main_ui.style.theme_names():
             self.theme_options.append(theme_name)
 
-        self.variable = StringVar(self.theme_labelframe)
-        self.variable.set(self.theme_options[0])  # default value
+        self.theme_variable = StringVar(self.theme_labelframe)
+        self.theme_variable.set(self.theme_options[0])  # default value
 
-        self.theme_option_drop = ttk.OptionMenu(self.theme_labelframe, self.variable, *self.theme_options)
+        self.theme_option_drop = ttk.OptionMenu(self.theme_labelframe, self.theme_variable, *self.theme_options)
         self.theme_option_drop.pack(side=self.subitems_side)
 
         self.theme_apply_button = ttk.Button(self.theme_labelframe, text="Apply", command=main_ui.change_theme)
