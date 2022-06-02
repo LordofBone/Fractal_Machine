@@ -70,7 +70,7 @@ class TurtleManager:
         """
         Change the canvas theme with theme selected from the dropdown.
         """
-        self.style.theme_use(self.items.variable.get())
+        self.style.theme_use(self.items.theme_variable.get())
 
     def random_background(self):
         """
