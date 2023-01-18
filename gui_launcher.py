@@ -1,9 +1,17 @@
 from turtles import *
 from utils.gradient_generator import Colours
 from utils.tkinter_setup import TkinterBaseAccess
+from tkinter import *
+from _tkinter import TclError
 from tkinter import ttk
 from utils.gui_items import Items
+from PIL import Image, ImageTk
+import json
+from config.directories import images_dir
+from functions.json_download_convert import convert_b64_to_image
+from ml.openai_api import get_variants
 import sys
+import os
 
 """
 The main GUI launcher
@@ -31,6 +39,8 @@ class TurtleManager:
 
         self.screen.colormode(255)
 
+        self.gui_locked = False
+
         self.live_draw_checker()
 
         self.max_turtles = max_turtles
@@ -57,6 +67,24 @@ class TurtleManager:
         if random_bg:
             self.random_background()
 
+    def lock_unlock_gui(self):
+        """
+        Lock/unlock the GUI.
+        """
+        if self.gui_locked:
+            button_state = NORMAL
+            self.gui_locked = False
+        else:
+            button_state = DISABLED
+            self.gui_locked = True
+
+        for w in self.items.main_ui.master.winfo_children():
+            for child in w.winfo_children():
+                try:
+                    child.configure(state=button_state)
+                except TclError:
+                    pass
+
     def live_draw_checker(self):
         """
         Check if live drawing has been set and turn trace on/off accordingly.
@@ -77,7 +105,73 @@ class TurtleManager:
         Set a random background to the canvas.
         """
         self.canvas_colour.random()
-        self.screen.bgcolor(self.canvas_colour.R, self.canvas_colour.G, self.canvas_colour.B)
+        color_val = "#%02x%02x%02x" % (self.canvas_colour.R, self.canvas_colour.G, self.canvas_colour.B)
+        TkinterBaseAccess.canvas.create_rectangle(-400, -300, 400, 300, fill=color_val, outline=color_val)
+
+    def init_ml(self):
+        """
+        Initialise the machine learning algorithm to get variants of the generated image.
+        """
+        self.lock_unlock_gui()
+
+        self.items.button_init_ml.config(text="ML Generating...")
+        self.items.button_init_ml.update()
+
+        self.progress_bar_step()
+
+        self.screen.update()
+
+        self.progress_bar_step()
+
+        TkinterBaseAccess.canvas.postscript(file=images_dir / "canvas.eps")
+
+        self.progress_bar_step()
+
+        with Image.open(images_dir / "canvas.eps") as canvas:
+            new_size = (600, 600)
+            im1 = canvas.resize(new_size)
+            im1.save(images_dir / "canvas.png", "png")
+
+        self.progress_bar_step()
+
+        os.remove(images_dir / "canvas.eps")
+
+        self.progress_bar_step()
+
+        response = get_variants()
+
+        self.progress_bar_step()
+
+        new_file_name = f"variation-{response['created']}.json"
+
+        self.progress_bar_step()
+
+        with open(images_dir / new_file_name, mode="w", encoding="utf-8") as file:
+            json.dump(response, file)
+
+        self.progress_bar_step()
+
+        ml_img = convert_b64_to_image(new_file_name, response)
+
+        self.progress_bar_step()
+
+        img = ImageTk.PhotoImage(Image.open(ml_img))
+
+        self.progress_bar_step()
+
+        self.clear_screen()
+
+        TkinterBaseAccess.canvas.create_image(0, 0, image=img)
+
+        self.items.progress_bar.config(value=0)
+        self.items.button_init_ml.config(text="ML Generation")
+        self.screen.update()
+
+        self.lock_unlock_gui()
+
+        self.screen.update()
+
+        self.screen.mainloop()
 
     def button_config_refresh(self):
         """
@@ -111,7 +205,7 @@ class TurtleManager:
 
         self.items.button_live.config(text="Live Drawing: %a" % self.live_draw)
 
-        # self.items.render_progress.config(value=0)
+        self.items.progress_bar.config(value=0)
 
     def turtle_configs_reset(self):
         """
@@ -152,6 +246,14 @@ class TurtleManager:
 
         self.button_config_refresh()
 
+    def progress_bar_step(self):
+        """
+        Increment the progress bar by 10.
+        """
+        if self.items.progress_bar['value'] < 100:
+            self.items.progress_bar.step(10)
+            self.screen.update()
+
     def percentage(self, number_in):
         """
         Calculate a percentage - used for the loading bar (currently not implemented).
@@ -165,16 +267,22 @@ class TurtleManager:
         the loading bar code, this currently does not work as the loading bar refresh
         refreshes the entire canvas per move; slowing up the rendering.
         """
+        self.lock_unlock_gui()
+
         self.items.button_draw.config(text="Drawing...")
         self.items.button_draw.update()
 
         for i in range(self.turtle_count):
-            # self.items.render_progress.config(value=self.percentage(i))
+            self.items.progress_bar.config(value=self.percentage(i))
+            self.screen.update()
             self.turtles[i].run()
             self.turtles[i].rendered = True
 
-        # self.items.render_progress.config(value=0)
+        self.items.progress_bar.config(value=0)
         self.items.button_draw.config(text="Draw")
+        self.button_config_refresh()
+
+        self.lock_unlock_gui()
 
         self.screen.update()
 
