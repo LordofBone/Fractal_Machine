@@ -12,8 +12,8 @@ from functions.json_download_convert import convert_b64_to_image
 from ml.openai_api import get_variants
 from turtles import *
 from utils.gradient_generator import Colours
-from utils.gui_items import Items
-from utils.tkinter_setup import TkinterBaseAccess
+from gui.gui_items import Items
+from gui.tkinter_setup import TkinterBaseAccess
 
 """
 The main GUI launcher
