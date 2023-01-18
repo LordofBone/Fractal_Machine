@@ -1,6 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
 from tkinter import *
+from tkinter import ttk
 
 """
 All GUI items are setup here to be used by the main launcher

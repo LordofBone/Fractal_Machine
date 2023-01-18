@@ -1,17 +1,19 @@
-from turtles import *
-from utils.gradient_generator import Colours
-from utils.tkinter_setup import TkinterBaseAccess
-from tkinter import *
-from _tkinter import TclError
-from tkinter import ttk
-from utils.gui_items import Items
-from PIL import Image, ImageTk
 import json
+import os
+import sys
+from tkinter import *
+from tkinter import ttk
+
+from PIL import Image, ImageTk
+from _tkinter import TclError
+
 from config.directories import *
 from functions.json_download_convert import convert_b64_to_image
 from ml.openai_api import get_variants
-import sys
-import os
+from turtles import *
+from utils.gradient_generator import Colours
+from utils.gui_items import Items
+from utils.tkinter_setup import TkinterBaseAccess
 
 """
 The main GUI launcher

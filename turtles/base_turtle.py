@@ -1,7 +1,8 @@
 import turtle
+from random import randrange
+
 from utils.gradient_generator import Colours
 from utils.tkinter_setup import TkinterBaseAccess
-from random import randrange
 
 """
 The base class that all turtles call, this contains

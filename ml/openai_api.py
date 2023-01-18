@@ -1,11 +1,6 @@
-
-import os
-from config.directories import images_dir
-
 import openai
 
 from config.api import api_key, size
-
 from config.directories import images_dir
 
 

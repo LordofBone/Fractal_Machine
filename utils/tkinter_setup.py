@@ -1,6 +1,7 @@
-import _tkinter
-import turtle
 import tkinter as tk
+import turtle
+
+import _tkinter
 
 """
 Main tkinter stuff is setup here, the GUI launcher grabs the canvas from here

@@ -1,6 +1,7 @@
+import math
+
 from turtles.base_turtle import BaseTurtle
 from utils.fibonacci_core import FibonacciSeq
-import math
 
 """
 Fibonacci sequence turtle, thanks to:
