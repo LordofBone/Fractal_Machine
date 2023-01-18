@@ -1,4 +1,7 @@
 .idea/
 *.pyc
+images/*
+!images/.gitignore
+config/api.py
 misc/*
 __pycache__
