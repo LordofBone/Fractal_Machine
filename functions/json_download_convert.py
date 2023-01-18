@@ -5,7 +5,7 @@ from base64 import b64decode
 
 def convert_b64_to_image(file_name, openai_response):
 
-    json_file = images_dir / file_name
+    json_file = data_dir / file_name
 
     with open(json_file, mode="r", encoding="utf-8") as file:
         response = json.load(file)

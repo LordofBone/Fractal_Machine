@@ -1,5 +1,7 @@
 .idea/
 *.pyc
+data/*
+!data/.gitignore
 images/*
 !images/.gitignore
 config/api.py

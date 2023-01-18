@@ -7,7 +7,7 @@ from tkinter import ttk
 from utils.gui_items import Items
 from PIL import Image, ImageTk
 import json
-from config.directories import images_dir
+from config.directories import *
 from functions.json_download_convert import convert_b64_to_image
 from ml.openai_api import get_variants
 import sys
@@ -120,7 +120,7 @@ class TurtleManager:
 
     def init_ml(self):
         """
-        Initialise the machine learning algorithm to get variants of the generated image.
+        Initialise the machine learning algorithm to get variants of the generated image using DALL-E 2.
         """
         self.lock_unlock_gui()
 
@@ -133,18 +133,18 @@ class TurtleManager:
 
         self.progress_bar_step()
 
-        TkinterBaseAccess.canvas.postscript(file=images_dir / "canvas.eps")
+        TkinterBaseAccess.canvas.postscript(file=data_dir / "canvas.eps")
 
         self.progress_bar_step()
 
-        with Image.open(images_dir / "canvas.eps") as canvas:
+        with Image.open(data_dir / "canvas.eps") as canvas:
             new_size = (600, 600)
             im1 = canvas.resize(new_size)
             im1.save(images_dir / "canvas.png", "png")
 
         self.progress_bar_step()
 
-        os.remove(images_dir / "canvas.eps")
+        os.remove(data_dir / "canvas.eps")
 
         self.progress_bar_step()
 
@@ -156,7 +156,7 @@ class TurtleManager:
 
         self.progress_bar_step()
 
-        with open(images_dir / new_file_name, mode="w", encoding="utf-8") as file:
+        with open(data_dir / new_file_name, mode="w", encoding="utf-8") as file:
             json.dump(response, file)
 
         self.progress_bar_step()
