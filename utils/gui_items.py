@@ -51,18 +51,13 @@ class Items:
         self.turtle_count_label = ttk.Label(self.screen_labelframe)
         self.turtle_count_label.pack(side=self.subitems_side)
 
-        # todo: figure out a way for a progress bar to move independently of the turtles
-        # self.render_progress = ttk.Progressbar(self.screen_labelframe, orient=HORIZONTAL, length=100, mode='determinate')
-        # self.render_progress.pack()
-
         self.button_draw = ttk.Button(self.screen_labelframe, text="Draw", command=self.main_ui.draw_sequence)
         self.button_draw.pack(side=self.subitems_side)
 
         self.clear_button = ttk.Button(self.screen_labelframe, text="Clear", command=self.main_ui.clear_screen)
         self.clear_button.pack(side=self.subitems_side)
 
-        self.progress_bar = ttk.Progressbar(self.screen_labelframe, orient="horizontal", length=500,
-                                            mode="determinate")
+        self.progress_bar = ttk.Progressbar(self.screen_labelframe, orient="horizontal", length=500, mode="determinate")
         self.progress_bar.pack(side="right")
 
         """
@@ -324,7 +319,7 @@ class Items:
         self.button_random_bg.pack(side=self.subitems_side)
 
         self.button_init_ml = ttk.Button(self.turtle_config_labelframe, text="ML Generation",
-                                           command=self.main_ui.init_ml)
+                                         command=self.main_ui.init_ml)
         self.button_init_ml.pack(side=self.subitems_side)
 
         """

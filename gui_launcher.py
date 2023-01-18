@@ -67,6 +67,15 @@ class TurtleManager:
         if random_bg:
             self.random_background()
 
+    def element_config(self, element, button_state):
+        """
+        Configure the element, also handles if the element cannot be disabled and if so, skips it.
+        """
+        try:
+            element.configure(state=button_state)
+        except TclError:
+            pass
+
     def lock_unlock_gui(self):
         """
         Lock/unlock the GUI.
@@ -78,12 +87,13 @@ class TurtleManager:
             button_state = DISABLED
             self.gui_locked = True
 
-        for w in self.items.main_ui.master.winfo_children():
-            for child in w.winfo_children():
-                try:
-                    child.configure(state=button_state)
-                except TclError:
-                    pass
+        for frame in self.items.main_ui.master.winfo_children():
+            for element in frame.winfo_children():
+                self.element_config(element, button_state)
+                for sub_element in element.winfo_children():
+                    self.element_config(sub_element, button_state)
+                    for sub_sub_element in sub_element.winfo_children():
+                        self.element_config(sub_sub_element, button_state)
 
     def live_draw_checker(self):
         """
