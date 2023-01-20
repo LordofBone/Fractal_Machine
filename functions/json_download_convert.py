@@ -1,5 +1,6 @@
 import json
 from base64 import b64decode
+from PIL import Image
 
 from config.directories import *
 
@@ -15,5 +16,10 @@ def convert_b64_to_image(file_name, openai_response):
         image_file = images_dir / f"{json_file.stem}-{index}.png"
         with open(image_file, mode="wb") as png:
             png.write(image_data)
+
+        with Image.open(image_file) as final:
+            new_size = (604, 454)
+            im1 = final.resize(new_size)
+            im1.save(image_file, "png")
 
     return image_file
