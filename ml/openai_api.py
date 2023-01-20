@@ -5,6 +5,10 @@ from config.directories import images_dir
 
 
 def get_variants():
+    """
+    Get the variants from the OpenAI API
+    :return:
+    """
     image_path = images_dir / "canvas.png"
 
     openai.api_key = api_key
