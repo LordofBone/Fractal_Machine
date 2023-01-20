@@ -21,5 +21,5 @@ they can be drawn in real time, or they can be drawn in the background faster.
 
 There are also options for random positions of the shapes and whether to queue them up or not.
 
-Once the image has been made, the ML Generation button can be pressed which will then send the image off to DALL-E 2
+Once the image has been made, the ML Generation button can be pressed which will then send the image off to DALL-E
 which will generate a different interpretation of the image based on the input image.
