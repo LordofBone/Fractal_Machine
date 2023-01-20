@@ -19,7 +19,7 @@ def convert_b64_to_image(file_name, openai_response):
             png.write(image_data)
 
         with Image.open(image_file) as final:
-            new_size = (604, 454)
+            new_size = (800, 600)
             im1 = final.resize(new_size)
             im1.save(image_file, "png")
 

@@ -145,15 +145,17 @@ class TurtleManager:
         current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
         with Image.open(data_dir / "canvas.eps") as canvas:
-            new_size = (600, 600)
+            new_size = (800, 800)
             im1 = canvas.resize(new_size)
-            # save the resized image for compatibility with DALL-E
+            # save a resized image for compatibility with DALL-E, which requires equal width and height
             im1.save(images_dir / "canvas.png", "png")
 
             # save the original canvas for 1:1 comparison with the newly generated image
+            canvas_size = (800, 600)
+            im1_original = canvas.resize(canvas_size)
             file_name = f"canvas_{current_time}.png"
             file_path = images_dir / file_name
-            canvas.save(file_path, "png")
+            im1_original.save(file_path, "png")
 
         self.progress_bar_step()
 
@@ -186,7 +188,9 @@ class TurtleManager:
 
         self.clear_screen()
 
-        TkinterBaseAccess.canvas.create_image(0, 0, image=img)
+        # TkinterBaseAccess.canvas.create_image(0, 0, image=img)
+
+        TkinterBaseAccess.canvas.create_image(0, 0, image=img, anchor=CENTER)
 
         self.items.progress_bar.config(value=0)
         self.items.button_init_ml.config(text="ML Generation")
