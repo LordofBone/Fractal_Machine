@@ -1,5 +1,6 @@
 import json
 from base64 import b64decode
+
 from PIL import Image
 
 from config.directories import *
