@@ -123,7 +123,7 @@ class TurtleManager:
 
     def init_ml(self):
         """
-        Initialise the machine learning algorithm to get variants of the generated image using DALL-E 2.
+        Initialise the machine learning algorithm to get variants of the generated image using DALL-E.
         """
 
         # todo: move all this to a separate class?
