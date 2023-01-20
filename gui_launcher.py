@@ -124,6 +124,8 @@ class TurtleManager:
         """
         Initialise the machine learning algorithm to get variants of the generated image using DALL-E 2.
         """
+
+        # todo: move all this to a separate class?
         self.lock_unlock_gui()
 
         self.items.button_init_ml.config(text="ML Generating...")
