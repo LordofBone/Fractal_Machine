@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 import sys
@@ -9,11 +10,11 @@ from _tkinter import TclError
 
 from config.directories import *
 from functions.json_download_convert import convert_b64_to_image
+from gui.gui_items import Items
+from gui.tkinter_setup import TkinterBaseAccess
 from ml.openai_api import get_variants
 from turtles import *
 from utils.gradient_generator import Colours
-from gui.gui_items import Items
-from gui.tkinter_setup import TkinterBaseAccess
 
 """
 The main GUI launcher
@@ -141,10 +142,18 @@ class TurtleManager:
 
         self.progress_bar_step()
 
+        current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
         with Image.open(data_dir / "canvas.eps") as canvas:
             new_size = (600, 600)
             im1 = canvas.resize(new_size)
+            # save the resized image for compatibility with DALL-E
             im1.save(images_dir / "canvas.png", "png")
+
+            # save the original canvas for 1:1 comparison with the newly generated image
+            file_name = f"canvas_{current_time}.png"
+            file_path = images_dir / file_name
+            canvas.save(file_path, "png")
 
         self.progress_bar_step()
 
@@ -153,6 +162,8 @@ class TurtleManager:
         self.progress_bar_step()
 
         response = get_variants()
+
+        os.remove(images_dir / "canvas.png")
 
         self.progress_bar_step()
 
