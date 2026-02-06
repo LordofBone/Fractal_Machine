@@ -4,8 +4,8 @@ import turtle
 import _tkinter
 
 """
-Main tkinter stuff is setup here, the GUI launcher grabs the canvas from here
-and base turtle grabs the width and height 
+Main tkinter setup; the GUI launcher grabs the canvas from here
+and base turtle grabs the width and height
 from here in order to set random positions within the canvas.
 """
 
