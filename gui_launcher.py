@@ -1,6 +1,6 @@
 import datetime
 import json
-import os
+from pathlib import Path
 import sys
 from tkinter import *
 from tkinter import ttk
@@ -17,7 +17,7 @@ from turtles import *
 from utils.gradient_generator import Colours
 
 """
-The main GUI launcher
+The main GUI launcher for the Fractal Machine application.
 """
 
 
@@ -123,10 +123,10 @@ class TurtleManager:
 
     def init_ml(self):
         """
-        Initialise the machine learning algorithm to get variants of the generated image using DALL-E.
+        Initialise the machine learning pipeline to get variants of the
+        generated image using DALL-E.
         """
 
-        # todo: move all this to a separate class?
         self.lock_unlock_gui()
 
         self.items.button_init_ml.config(text="ML Generating...")
@@ -159,13 +159,13 @@ class TurtleManager:
 
         self.progress_bar_step()
 
-        os.remove(data_dir / "canvas.eps")
+        Path(data_dir / "canvas.eps").unlink(missing_ok=True)
 
         self.progress_bar_step()
 
         response = get_variants()
 
-        os.remove(images_dir / "canvas.png")
+        Path(images_dir / "canvas.png").unlink(missing_ok=True)
 
         self.progress_bar_step()
 
@@ -187,8 +187,6 @@ class TurtleManager:
         self.progress_bar_step()
 
         self.clear_screen()
-
-        # TkinterBaseAccess.canvas.create_image(0, 0, image=img)
 
         TkinterBaseAccess.canvas.create_image(0, 0, image=img, anchor=CENTER)
 
@@ -380,13 +378,14 @@ class TurtleManager:
         self.button_config_refresh()
 
     def exit(self):
+        """
+        Clear the screen and exit the application.
+        """
         self.screen.clear()
         sys.exit()
 
-    """
-    Here all the turtle classes are called and inserted into the pipeline
-    along with their configurations set by the user from the GUI.
-    """
+    # Turtle creation methods: each instantiates a turtle class and inserts it
+    # into the pipeline along with configurations set by the user from the GUI.
 
     def add_branch(self):
         self.branch_count += 1
@@ -460,10 +459,7 @@ class TurtleManager:
         if not self.turtle_queueing:
             self.draw_sequence()
 
-
-"""
-Instantiates the GUI Turtle manager.
-"""
+# Instantiate the GUI Turtle manager.
 TurtleManagerAccess = TurtleManager()
 
 if __name__ == "__main__":

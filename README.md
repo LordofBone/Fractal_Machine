@@ -9,8 +9,8 @@ If you are running on Windows you will need to follow the instructions [here](ht
 
 ### Setting up the API
 1. Go to [OpenAI](https://openai.com/api/) and create an account, generate and grab the API key from Account > API Keys.
-2. Copy the 'api_template.py' file under 'config' and call it 'api.py'
-3. Put the api key in the 'api_key' variable in api.py
+2. Copy the `.env.template` file in the project root and rename the copy to `.env`
+3. Replace `your_api_key_here` with your actual API key in the `.env` file
 
 ### Running the code
 ```python3 main.py```
