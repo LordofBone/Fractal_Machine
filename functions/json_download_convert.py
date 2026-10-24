@@ -8,10 +8,10 @@ from config.directories import *
 
 def convert_b64_to_image(file_name, openai_response):
     """
-    Convert the base64 encoded image from the OpenAI API response to a PNG image
-    :param file_name:
-    :param openai_response:
-    :return:
+    Convert the base64 encoded image from the OpenAI API response to a PNG image.
+    :param file_name: Name of the JSON file containing the response data.
+    :param openai_response: The OpenAI API response dict.
+    :return: Path to the final converted image file.
     """
     json_file = data_dir / file_name
 

@@ -1,10 +1,10 @@
-from gui_launcher import TurtleManagerAccess
-from turtles import *
-
 """
-A module for running tests without going through the GUI also 
+A module for running tests without going through the GUI; also
 allows for some hidden settings within turtles.
 """
+
+from gui_launcher import TurtleManagerAccess
+from turtles import *
 
 if __name__ == '__main__':
     TurtleManagerAccess.max_turtles = 5000

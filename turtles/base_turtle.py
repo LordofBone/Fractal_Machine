@@ -5,13 +5,12 @@ from utils.gradient_generator import Colours
 from gui.tkinter_setup import TkinterBaseAccess
 
 """
-The base class that all turtles call, this contains
+The base class that all turtles inherit from; this contains
 all of the default settings that every turtle uses
-as well as the step function that moves each turtle
+as well as the step function that moves each turtle.
 """
 
 
-# todo: make this an ABC class?
 class BaseTurtle:
 
     def __init__(self, speed, pensize, stamp, gradient_step, rand_pos, rendered=False):
@@ -52,11 +51,10 @@ class BaseTurtle:
         self.t.goto(x, y)
         self.t.pendown()
 
-    # todo: find a way to step once or multi-thread draws ?
     def run(self):
         """
-        This is called by the TurtleManager under gui_launcher
-        to perform the specific turtles drawing actions.
+        Called by the TurtleManager under gui_launcher
+        to perform the specific turtle's drawing actions.
         """
         if not self.rendered:
             self.step()
