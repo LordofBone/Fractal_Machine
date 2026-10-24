@@ -183,6 +183,8 @@ class TurtleManager:
 
         TkinterBaseAccess.canvas.create_image(0, 0, image=img, anchor=CENTER)
 
+        self.progress_bar_step()
+
         self.items.progress_bar.config(value=0)
         self.items.button_init_ml.config(text="ML Generation")
         self.screen.update()
