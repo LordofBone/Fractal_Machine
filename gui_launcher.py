@@ -1,6 +1,5 @@
 import datetime
 import json
-from pathlib import Path
 import sys
 from tkinter import *
 from tkinter import ttk
@@ -159,13 +158,7 @@ class TurtleManager:
 
         self.progress_bar_step()
 
-        Path(data_dir / "canvas.eps").unlink(missing_ok=True)
-
-        self.progress_bar_step()
-
         response = get_variants()
-
-        Path(images_dir / "canvas.png").unlink(missing_ok=True)
 
         self.progress_bar_step()
 
